@@ -59,4 +59,13 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await widgetTester.pumpAndSettle();
   });
+  testWidgets('articles are displayed', (widgetTester) async {
+    arrangeNewsServiceReturnsUnEmptyListOfArticles();
+    await widgetTester.pumpWidget(createWidgetForTest());
+    await widgetTester.pump();
+    for (Article article in articlesUnEmptyList) {
+      expect(find.text(article.title), findsOneWidget);
+      expect(find.text(article.content), findsOneWidget);
+    }
+  });
 }
