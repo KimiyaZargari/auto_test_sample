@@ -27,12 +27,20 @@ void main() {
         .thenAnswer((invocation) async => articlesUnEmptyList);
   }
 
+  void arrangeNewsServiceReturnsUnEmptyListOfArticlesAfter2Seconds() {
+    when(() => mockNewsService.getArticles()).thenAnswer((invocation) async {
+      return Future.delayed(const Duration(seconds: 2), () {
+        return articlesUnEmptyList;
+      });
+    });
+  }
+
   Widget createWidgetForTest() {
     return MaterialApp(
       title: 'News App',
       home: ChangeNotifierProvider(
         create: (_) => NewsChangeNotifier(mockNewsService),
-        child: NewsPage(),
+        child: const NewsPage(),
       ),
     );
   }
@@ -41,5 +49,14 @@ void main() {
     arrangeNewsServiceReturnsUnEmptyListOfArticles();
     await widgetTester.pumpWidget(createWidgetForTest());
     expect(find.text('News'), findsOneWidget);
+  });
+
+  testWidgets('loading indicator is displayed while waiting for articles',
+      (widgetTester) async {
+    arrangeNewsServiceReturnsUnEmptyListOfArticlesAfter2Seconds();
+    await widgetTester.pumpWidget(createWidgetForTest());
+    await widgetTester.pump(const Duration(milliseconds: 500));
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    await widgetTester.pumpAndSettle();
   });
 }
