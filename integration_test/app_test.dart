@@ -1,4 +1,5 @@
 import 'package:auto_test_sample/article.dart';
+import 'package:auto_test_sample/article_page.dart';
 import 'package:auto_test_sample/news_change_notifier.dart';
 import 'package:auto_test_sample/news_page.dart';
 import 'package:auto_test_sample/news_service.dart';
@@ -56,13 +57,16 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await widgetTester.pumpAndSettle();
   });
-  testWidgets('articles are displayed', (widgetTester) async {
+  testWidgets(
+      'Tapping on the first article opens the article page where the article content is displayed',
+      (widgetTester) async {
     arrangeNewsServiceReturnsUnEmptyListOfArticles();
     await widgetTester.pumpWidget(createWidgetForTest());
     await widgetTester.pump();
-    for (Article article in articlesUnEmptyList) {
-      expect(find.text(article.title), findsOneWidget);
-      expect(find.text(article.content), findsOneWidget);
-    }
+    await widgetTester.tap(find.text(articlesUnEmptyList.first.title));
+    await widgetTester.pumpAndSettle();
+    expect(find.byType(NewsPage), findsNothing);
+    expect(find.byType(ArticlePage), findsOneWidget);
+    expect(find.text(articlesUnEmptyList.first.content), findsOneWidget);
   });
 }
