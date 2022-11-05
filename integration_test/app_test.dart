@@ -1,14 +1,15 @@
-import 'package:auto_test_sample/article.dart';
-import 'package:auto_test_sample/article_page.dart';
-import 'package:auto_test_sample/news_change_notifier.dart';
-import 'package:auto_test_sample/news_page.dart';
-import 'package:auto_test_sample/news_service.dart';
+import 'package:auto_test_sample/article/data/models/article_model.dart';
+import 'package:auto_test_sample/article/presentation/pages/article_page.dart';
+import 'package:auto_test_sample/news/domain/repositories/i_news_repository.dart';
+import 'package:auto_test_sample/news/presentation/notifiers/news_change_notifier.dart';
+import 'package:auto_test_sample/news/presentation/pages/news_page.dart';
+import 'package:auto_test_sample/news/data/repositories/news_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
-class MockNewsService extends Mock implements NewsService {}
+class MockNewsService extends Mock implements INewsRepository {}
 
 void main() {
   late MockNewsService mockNewsService;

@@ -1,12 +1,10 @@
-import 'dart:math';
-
-import 'package:auto_test_sample/article.dart';
-import 'package:auto_test_sample/news_change_notifier.dart';
-import 'package:auto_test_sample/news_service.dart';
+import 'package:auto_test_sample/article/domain/entities/article.dart';
+import 'package:auto_test_sample/news/domain/repositories/i_news_repository.dart';
+import 'package:auto_test_sample/news/presentation/notifiers/news_change_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockNewsService extends Mock implements NewsService {}
+class MockNewsService extends Mock implements INewsRepository {}
 
 void main() {
   late NewsChangeNotifier sut;

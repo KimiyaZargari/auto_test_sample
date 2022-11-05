@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'article.dart';
+import '../../domain/entities/article.dart';
 
 class ArticlePage extends StatelessWidget {
   final Article article;
